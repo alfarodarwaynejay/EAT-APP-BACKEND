@@ -110,6 +110,7 @@ const promoteEmployee = (url, query, data, callback) => {
 const deleteEntry = (url, data, callback) => {
 	deleteFromEmployee(url, data);
 	deleteFromLogins(url, data);
+	deleteFromEmployeeInfo(url, info);
 	callback();
 }
 
@@ -120,7 +121,7 @@ const deleteFromEmployee = (url, data) => {
 
 		database.collection('Employees').deleteOne({_id: data}, (err, resp) => {
 			if (err) throw err;
-			console.log('From Employees: ', resp);
+			console.log('Deleting from Employees: ', resp);
 			db.close();
 		})
 
@@ -134,7 +135,21 @@ const deleteFromLogins = (url, data) => {
 
 		database.collection('Logins').deleteOne({_id: data}, (err, resp) => {
 			if (err) throw err;
-			console.log('From Logins: ', resp);
+			console.log('Deleting from Logins: ', resp);
+			db.close();
+		})
+
+	})
+}
+
+const deleteFromEmployeeInfo = (url, data) => {
+	MongoClient.connect(url, urlParse, (err, db) => {
+		if (err) throw err;
+		const database = db.db('EatDB');
+
+		database.collection('EmployeeInfo').deleteOne({_id: data}, (err, resp) => {
+			if (err) throw err;
+			console.log('Deleting from EmployeeInfo: ', resp);
 			db.close();
 		})
 

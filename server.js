@@ -147,18 +147,23 @@ app.listen(process.env.PORT || 3000, () => {
 //   	hasEvaluated: []
 //   },
 // ];
+// const hash = bcrypt.hashSync('9999999');
+// const employeeobj = {  name: 'admin', email: 'admin@gmail.com', password: hash, _id: 9999999 };
 
-// MongoClient.connect(url, urlParse, (err, db) => {
-// 	if (err) throw err;
-
-// 	const database = db.db('EatDB');
-
-// 	database.collection('EmployeeInfo').insertMany( obj, (err, resp) => {
+// const addLogin = (url, data, callback) => {
+// 	MongoClient.connect(url, urlParse, (err, db) => {
 // 		if (err) throw err;
-// 		console.log('Done inserting: ', resp.insertedCount);
+// 		const database = db.db('EatDB');
+
+// 		database.collection('Logins').insertOne(data, (err, resp) => {
+// 			if (err) throw err;
+// 			callback(resp);
+// 			db.close();
+// 		})
+
 // 	})
+// };
 
-// });
-
+// addLogin(url, employeeobj, (resp)=>console.log(resp));
 
 console.log(`\n\n\n\n`)

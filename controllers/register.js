@@ -8,8 +8,9 @@ const handleRegister = (req, res, url, bcrypt) => {
 		res.status(404).json('incorrect form submission')
 	} else {
 		isEmployee(url, employee_id, (resp) => {
-			if (resp._id === employee_id) {
-				// res.json(resp)
+
+			if (!!resp) {
+				// this only triggers when employee id is found in the DB
 				console.log('id found');
 				const hash = bcrypt.hashSync(password);
 				const employee = {  name: name, email: email, password: hash, _id: employee_id };
@@ -21,7 +22,7 @@ const handleRegister = (req, res, url, bcrypt) => {
 				});
 					res.json('success');
 			} else {
-				res.status(404).json('id not found');
+				res.status(404).json('failed');
 			}
 		});
 	}
@@ -49,7 +50,7 @@ const addLogin = (url, data, callback) => {
 
 		database.collection('Logins').insertOne(data, (err, resp) => {
 			if (err) throw err;
-			callback(resp)
+			callback(resp);
 			db.close();
 		})
 
@@ -60,9 +61,9 @@ const addEmployeeInfo = (url, name, emp_id, email, callback) => {
 	const obj = {
 	  	name: name, 
 	  	email: email,
-	  	position: '', 
+	  	position: 'JD', 
 	  	_id: emp_id,
-	  	team: '',
+	  	team: 'intern',
 		stats: [],
 	  	hasEvaluated: []
   	}

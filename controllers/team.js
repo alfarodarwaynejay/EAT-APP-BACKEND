@@ -2,9 +2,9 @@ const MongoClient = require('mongodb').MongoClient;
 const urlParse = { useNewUrlParser: true };
 
 const handleTeam = (req, res, url) => {
-	const { team, emp_id } = req.body;
+	const { emp_id } = req.body; //team is removed....
 
-	if(!team || !emp_id) {
+	if(!emp_id) {
 		res.status(404).json('incorrect form submission');
 	} else {
 		//looking for teammates already evaluated
@@ -14,7 +14,7 @@ const handleTeam = (req, res, url) => {
 			} else {
 				console.log(resp[0].hasEvaluated);
 				//populating team here:
-				populateTeam(url, team, resp[0].hasEvaluated, (resp2) => {
+				populateTeam(url, resp[0].team, resp[0].hasEvaluated, (resp2) => {
 					console.log(resp2.length)
 					res.json(resp2);
 
@@ -33,7 +33,7 @@ const getTeam = (url, id, callback) => {
 		const database = db.db('EatDB');
 
 		database.collection('EmployeeInfo')
-			.find({_id: id}, {projection: { hasEvaluated: 1 }} )
+			.find({_id: id}, {projection: { hasEvaluated: 1, team: 1 }} )
 			.toArray((err, resp) => {
 				if (err) throw err;
 				console.log('Getting Team...');
