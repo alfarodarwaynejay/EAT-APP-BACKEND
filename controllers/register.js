@@ -8,12 +8,13 @@ const handleRegister = (req, res, url, bcrypt) => {
 		res.status(404).json('incorrect form submission')
 	} else {
 		isEmployee(url, employee_id, (resp) => {
+			console.log(resp)
 
 			if (!!resp) {
 				// this only triggers when employee id is found in the DB
 				console.log('id found');
 				const hash = bcrypt.hashSync(password);
-				const employee = {  name: name, email: email, password: hash, _id: employee_id };
+				const employee = {  name: name, email: email, password: hash, _id: parseInt(employee_id)};
 				addLogin(url, employee, (resp) => {
 					console.log('Adding to Logins...');
 				});
@@ -34,7 +35,7 @@ const isEmployee = (url, data, callback) => {
 		if (err) throw err;
 		const database = db.db('EatDB');
 
-		database.collection('Employees').findOne({_id: data}, 
+		database.collection('Employees').findOne({_id: parseInt(data)}, 
 			(err, resp) => {
 				if (err) throw err;
 				callback(resp)
@@ -62,7 +63,7 @@ const addEmployeeInfo = (url, name, emp_id, email, callback) => {
 	  	name: name, 
 	  	email: email,
 	  	position: 'JD', 
-	  	_id: emp_id,
+	  	_id: parseInt(emp_id),
 	  	team: 'intern',
 		stats: [],
 	  	hasEvaluated: []
