@@ -7,18 +7,18 @@ const handleSignin = (req, res, url, bcrypt) => {
 	if(!email || !password) {
 		res.status(404).json('incorrect form submission')
 	} else {
-		getLoginCreds(url, email.toString(), (resp) => {
-			const passValid = bcrypt.compareSync(password.toString(), resp.password);
-			console.log(resp);
+		getLoginCreds(url, email.toString(), (resp1) => {
+			const passValid = bcrypt.compareSync(password.toString(), resp1.password);
+			console.log(resp1);
 
-			const db_email = resp.email;
-			const db_name = resp.name;
-			const db_id = resp._id;
+			const db_email = resp1.email;
+			const db_name = resp1.name;
+			const db_id = resp1._id;
 			console.log(db_id);
 
-			isGod(url, db_id, (resp) => {
-				console.log("RESPONSE FROM GOD: ", resp);
-				const is_God = resp ? true: false;
+			isGod(url, db_id, (resp2) => {
+				console.log("RESPONSE FROM GOD: ", resp2);
+				const is_God = resp2 ? true: false;
 
 				if (passValid && email === db_email) {
 					res.json({
