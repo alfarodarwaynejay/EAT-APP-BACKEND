@@ -18,7 +18,7 @@ const handleSignin = (req, res, url, bcrypt) => {
 
 			isGod(url, db_id, (resp2) => {
 				console.log("RESPONSE FROM GOD: ", resp2);
-				const is_God = resp2 ? true: false;
+				const is_God = resp2 ? true: false; //if there is response, db_id refers to God
 
 				if (passValid && email === db_email) {
 					res.json({

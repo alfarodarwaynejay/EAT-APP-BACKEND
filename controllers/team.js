@@ -15,10 +15,7 @@ const handleTeam = (req, res, url) => {
 				res.json('failed');
 			} else {
 				populateTeam( url, resp[0].team, resp[0].hasEvaluated, (resp2) => {
-					const toClient = resp2.map( item => {
-						const { _id, ...others } = item;
-						return { ...others, employee_id: _id };
-					})
+					const toClient = resp2.map( item => {const { _id, ...others } = item; return { ...others, employee_id: _id };})
 					console.log(resp2.length)
 					res.json(toClient);
 				})

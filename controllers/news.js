@@ -25,7 +25,7 @@ const handleGetNews = (req, res, url) => {
 		//getting news here:
 		getNews(url, (resp) => {
 			console.log('getting news...');
-			res.json(resp);
+			res.json(resp.map(item => item.news));
 		})
 	}
 }

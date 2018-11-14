@@ -10,21 +10,22 @@ const handleSetSchedule = (req, res, url) => {
 		//setting schedule here:
 		updateSchedule(url, { start, end }, (resp) => {
 			console.log('schedule set...');
-			res.json(resp);
+			res.json('success');
 		})
 	}
 	
 }
 
 const handleGetSchedule = (req, res, url) => {
-	const { getSched } = req.body;
+	const { get } = req.body;
 
-	if (!getSched) {
+	if (!get) {
 		res.status(404).json('incorrect form submission');
 	} else {
 		//getting schedule here:
 		getSchedule(url, (resp) => {
 			console.log('getting schedule...');
+			console.log(resp)
 			res.json(resp);
 		})
 	}
