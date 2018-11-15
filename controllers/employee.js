@@ -8,7 +8,7 @@ const handleAddEmployee = (req, res, url) => {
 		res.status(404).json('incorrect form submission')
 	} else {
 		isEmployee(url, emp_id, (resp) => {
-			if (!resp) {
+			if (resp !== null) {
 				//can add
 				console.log('id not found...adding!')
 				addToEmployee(url, emp_id, (resp) => {
