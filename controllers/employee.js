@@ -2,16 +2,16 @@ const MongoClient = require('mongodb').MongoClient;
 const urlParse = { useNewUrlParser: true };
 
 const handleAddEmployee = (req, res, url) => {
-	const { employee_id } = req.body;
+	const { emp_id } = req.body;
 
-	if(!employee_id) {
+	if(!emp_id) {
 		res.status(404).json('incorrect form submission')
 	} else {
-		isEmployee(url, employee_id, (resp) => {
+		isEmployee(url, emp_id, (resp) => {
 			if (!resp) {
 				//can add
 				console.log('id not found...adding!')
-				addToEmployee(url, employee_id, (resp) => {
+				addToEmployee(url, emp_id, (resp) => {
 					console.log('employee added');
 					res.json('success');
 				})
@@ -24,15 +24,16 @@ const handleAddEmployee = (req, res, url) => {
 }
 
 const handleDeleteEmployee = (req, res, url) => {
-	const { id, flag } = req.body;
+	const { id } = req.body;
 
-	if((!id || !flag) && flag !== 'del') {
+	if(!id) {
 		res.status(404).json('incorrect form submission')
 	} else {
 		isEmployee(url, id, (resp) => {
-			if (resp._id === employee_id) {
+			console.log(resp)
+			if (resp !== null) {
 				//can delete
-				deleteEntry(url, employee_id, () => {
+				deleteEntry(url, id, () => {
 					console.log('|--> User Deleted')
 					res.json('success')
 				})
@@ -46,16 +47,19 @@ const handleDeleteEmployee = (req, res, url) => {
 }
 
 const handlePromoteEmployee = (req, res, url) => {
-	const { id, position, flag } = req.body;
+	const { id, position } = req.body;
+	console.log(req.body);
 
-	if (!id || !position || !flag) {
+	if (!id || !position) {
 		res.status(404).json('incorrect form submission');
 	} else {
 		promoteEmployee(url, id, position, (resp) => {
-			console.log("Promoted Employee...");
+			
 			if(resp.matchedCount == 0) {
+				console.log("Employee not promoted...");
 				res.json('failed')
 			} else {
+				console.log("Employee promoted...");
 				res.json('success');
 			}
 			
@@ -82,7 +86,7 @@ const addToEmployee = (url, data, callback) => {
 		if (err) throw err;
 		const database = db.db('EatDB');
 
-		database.collection('Employees').insertOne({_id: data}, (err, resp) => {
+		database.collection('Employees').insertOne({_id: parseInt(data)}, (err, resp) => {
 			if (err) throw err;
 			console.log('From Employees: ', resp);
 			callback(resp);
@@ -110,7 +114,7 @@ const promoteEmployee = (url, query, data, callback) => {
 const deleteEntry = (url, data, callback) => {
 	deleteFromEmployee(url, data);
 	deleteFromLogins(url, data);
-	deleteFromEmployeeInfo(url, info);
+	deleteFromEmployeeInfo(url, data);
 	callback();
 }
 
