@@ -2,10 +2,10 @@ const MongoClient = require('mongodb').MongoClient;
 const urlParse = { useNewUrlParser: true };
 
 
-const handleEmplist = (req, res, url) => {
-	const { get } = req.body;
+const handleProfile = (req, res, url) => {
+	const { user_id, img_src } = req.body;
 
-	if(!get) {
+	if(!user_id || !img_src) {
 		res.status(404).json('incorrect form submission')
 	} else {
 		MongoClient.connect(url, urlParse, (err, db) => {
@@ -13,13 +13,13 @@ const handleEmplist = (req, res, url) => {
 			const database = db.db('EatDB');
 
 			database.collection('EmployeeInfo')
-				.find({}, {projection: {_id: 1, name: 1, email: 1, position: 1, team: 1}}).toArray( (err, resp) => {
+				.updateOne({_id: user_id}, {$set: { profile: img_src }}, (err, resp) => {
 						if (err) throw err;
 
 						console.log(resp)
 
 						res.json(resp)
-						console.log('Getting Employees...');
+						console.log('Updating profile...');
 						
 						db.close();
 				});
@@ -28,4 +28,4 @@ const handleEmplist = (req, res, url) => {
 	
 }
 
-module.exports = { handleEmplist };
+module.exports = { handleProfile };

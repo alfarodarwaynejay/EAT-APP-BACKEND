@@ -17,7 +17,8 @@ const schedule 	= require('./controllers/schedule.js');
 const team 		= require('./controllers/team.js');
 const evaluate 	= require('./controllers/evaluate.js');
 const stats 	= require('./controllers/stats.js');
-const emplist 	= require('./controllers/emplist.js')
+const emplist 	= require('./controllers/emplist.js');
+const profile 	= require('./controllers/profile.js')
 
 const app = express();
 app.use(bodyParser.json());
@@ -35,13 +36,14 @@ app.put('/add', 		(req, res) => {employee.handleAddEmployee(req, res, url)});
 app.put('/delete', 		(req, res) => {employee.handleDeleteEmployee(req, res, url)});
 app.put('/promote', 	(req, res) => {employee.handlePromoteEmployee(req, res, url)});
 app.put('/news', 		(req, res) => {news.handleAddNews(req, res, url)});
-app.post('/getemplist', (req, res) => {emplist.handleEmpList(req, res, url)});
+app.post('/getemplist', (req, res) => {emplist.handleEmplist(req, res, url)});
 app.post('/getnews', 	(req, res) => {news.handleGetNews(req, res, url)});
 app.put('/setschedule', (req, res) => {schedule.handleSetSchedule(req, res, url)});
 app.post('/getschedule',(req, res) => {schedule.handleGetSchedule(req, res, url)});
 app.post('/team',		(req, res) => {team.handleTeam(req, res, url)});
 app.put('/evaluate', 	(req, res) => {evaluate.handleEvaluate(req, res, url)});
-app.post('/stats', 	(req, res) => {stats.handleStats(req, res, url)});
+app.post('/stats', 		(req, res) => {stats.handleStats(req, res, url)});
+app.put('/profile', 	(req, res) => {profile.handleProfile(req, res, url)});
 
 
 app.listen(process.env.PORT || 3000, () => {

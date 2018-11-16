@@ -61,6 +61,7 @@ const addLogin = (url, data, callback) => {
 const addEmployeeInfo = (url, name, emp_id, email, callback) => {
 	const obj = {
 	  	name: name, 
+	  	profile: '',
 	  	email: email,
 	  	position: 'JD', 
 	  	_id: parseInt(emp_id),
