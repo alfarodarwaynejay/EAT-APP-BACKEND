@@ -2,35 +2,35 @@ const MongoClient = require('mongodb').MongoClient;
 const urlParse = { useNewUrlParser: true };
 
 const handleEvaluate = (req, res, url) => {
-	const { emp_id_evaluator, emp_id_evaluated, score } = req.body;
+	const { evaluator, evaluated, score } = req.body;
 
 	console.log(typeof score[0]);
 
-	if (!emp_id_evaluator || !emp_id_evaluated || !score ) {
+	if (!evaluator || !evaluated || !score ) {
 		res.status(404).json('invalid form submission');
 	} else {
-		setStat(url, emp_id_evaluated, score, (resp) => {
+		setStat(url, evaluated, score, (resp) => {
 			if (resp.modifiedCount === 0) {
-				res.json('update failed');
+				res.json('failed');
 			}
 		});
-		setHasEvaluated(url, emp_id_evaluator, emp_id_evaluated, (resp) => {
+		setHasEvaluated(url, evaluator, evaluated, (resp) => {
 			console.log(resp.modifiedCount)
 			if (resp.modifiedCount === 0) {
-				res.json('update failed');
+				res.json('failed');
 			}
 		});
 		res.json('success');
 	}
 }
 
-const setStat = (url, emp_id_evaluated, score, callback) => {
+const setStat = (url, evaluated, score, callback) => {
 	MongoClient.connect(url, urlParse, (err, db) => {
 		if (err) throw err;
 		const database = db.db('EatDB');
 
 		database.collection('EmployeeInfo')
-			.updateOne({_id: emp_id_evaluated}, {$push: { stats: score }}, 
+			.updateOne({_id: evaluated}, {$push: { stats: score }}, 
 				(err, resp) => {
 					if (err) throw err;
 					console.log('Pushing score...');
@@ -40,13 +40,13 @@ const setStat = (url, emp_id_evaluated, score, callback) => {
 	});
 };
 
-const setHasEvaluated = (url, emp_id_evaluator, emp_id_evaluated, callback) => {
+const setHasEvaluated = (url, evaluator, evaluated, callback) => {
 		MongoClient.connect(url, urlParse, (err, db) => {
 		if (err) throw err;
 		const database = db.db('EatDB');
 
 		database.collection('EmployeeInfo')
-			.updateOne({_id: emp_id_evaluator}, {$push: { hasEvaluated: emp_id_evaluated }}, 
+			.updateOne({_id: evaluator}, {$push: { hasEvaluated: evaluated }}, 
 				(err, resp) => {
 					if (err) throw err;
 					console.log('Pushing score...');
