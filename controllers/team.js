@@ -73,7 +73,7 @@ const populateTeam = (url, data, callback) => {
 		const database = db.db('EatDB');
 
 		database.collection('EmployeeInfo')
-			.find(data, {projection: {_id: 1, name: 1, email: 1, position: 1, team: 1}})
+			.find(data, {projection: {_id: 1, name: 1, email: 1, position: 1, team: 1, profile: 1}})
 			.toArray((err, resp) => {
 				if (err) throw err;
 				console.log('Populating team...');

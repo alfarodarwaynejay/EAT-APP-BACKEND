@@ -16,11 +16,14 @@ const handleProfile = (req, res, url) => {
 				.updateOne({_id: user_id}, {$set: { profile: img_src }}, (err, resp) => {
 						if (err) throw err;
 
-						console.log(resp)
+						console.log('Request has modified: ', resp.modifiedCount)
 
-						res.json(resp)
-						console.log('Updating profile...');
-						
+						if(resp.modifiedCount !== 0) {
+							res.json('success');
+							console.log('Profile Updated...');
+						} else {
+							res.json('failed')
+						}
 						db.close();
 				});
 		});
