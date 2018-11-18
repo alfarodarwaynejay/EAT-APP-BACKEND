@@ -18,7 +18,8 @@ const team 		= require('./controllers/team.js');
 const evaluate 	= require('./controllers/evaluate.js');
 const stats 	= require('./controllers/stats.js');
 const emplist 	= require('./controllers/emplist.js');
-const profile 	= require('./controllers/profile.js')
+const profile 	= require('./controllers/profile.js');
+const empstats 	= require('./controllers/empstats.js');
 
 const app = express();
 app.use(bodyParser.json());
@@ -44,6 +45,7 @@ app.post('/team',		(req, res) => {team.handleTeam(req, res, url)});
 app.put('/evaluate', 	(req, res) => {evaluate.handleEvaluate(req, res, url)});
 app.post('/stats', 		(req, res) => {stats.handleStats(req, res, url)});
 app.put('/profile', 	(req, res) => {profile.handleProfile(req, res, url)});
+app.post('/empstats', 	(req, res) => {empstats.handleEmpStats(req, res, url)});
 
 
 app.listen(process.env.PORT || 3000, () => {

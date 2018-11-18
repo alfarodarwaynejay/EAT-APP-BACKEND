@@ -12,6 +12,7 @@ const handleSetSchedule = (req, res, url) => {
 			console.log('schedule set...');
 			res.json('success');
 		})
+		resetHasEvaluated(url);
 	}
 	
 }
@@ -29,6 +30,21 @@ const handleGetSchedule = (req, res, url) => {
 			res.json(resp);
 		})
 	}
+}
+
+const resetHasEvaluated = (url) => {
+	MongoClient.connect(url, urlParse, (err, db) => {
+		if (err) throw err;
+		const database = db.db('EatDB');
+
+		database.collection('EmployeeInfo').updateMany({}, {$set: {hasEvaluated: [] }},
+			(err, resp) => {
+				if (err) throw err;
+				console.log('Updating hasEvaluated field: ');
+				db.close();
+		})
+
+	})
 }
 
 
