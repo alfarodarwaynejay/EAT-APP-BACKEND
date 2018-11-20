@@ -6,6 +6,7 @@ const handleStats = (req, res, url) => {
 
 	if (!emp_id) {
 		res.status(404).json('invalid form submission');
+		return;
 	} else {
 		getStat(url, emp_id, (resp) => {
 			if (resp === null) {

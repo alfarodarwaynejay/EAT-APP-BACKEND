@@ -5,7 +5,8 @@ const handleAddEmployee = (req, res, url) => {
 	const { emp_id } = req.body;
 
 	if(!emp_id) {
-		res.status(404).json('incorrect form submission')
+		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		isEmployee(url, emp_id, (resp) => {
 			if (resp !== null) {

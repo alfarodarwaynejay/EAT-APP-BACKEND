@@ -6,6 +6,7 @@ const handleEmpStats = (req, res, url) => {
 
 	if (!get) {
 		res.status(404).json('invalid form submission');
+		return;
 	} else {
 		getEmpStat(url, (resp) => {
 			if (resp.length === 0) {

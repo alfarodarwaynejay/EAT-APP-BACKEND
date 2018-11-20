@@ -6,6 +6,7 @@ const handleSignin = (req, res, url, bcrypt) => {
 
 	if(!email || !password) {
 		res.status(404).json('incorrect form submission')
+		return;
 	} else {
 		getLoginCreds(url, email.toString(), (resp1) => {
 			const passValid = bcrypt.compareSync(password.toString(), resp1.password);

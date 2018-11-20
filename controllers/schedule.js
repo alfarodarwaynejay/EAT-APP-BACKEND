@@ -5,7 +5,8 @@ const handleSetSchedule = (req, res, url) => {
 	const { start, end } = req.body;
 
 	if(!start || !end) {
-		res.status(404).json('incorrect form submission')
+		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		//setting schedule here:
 		updateSchedule(url, { start, end }, (resp) => {

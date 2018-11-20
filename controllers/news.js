@@ -6,6 +6,7 @@ const handleAddNews = (req, res, url) => {
 
 	if(!news) {
 		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		//adding news here:
 		addNews(url, news, (resp) => {

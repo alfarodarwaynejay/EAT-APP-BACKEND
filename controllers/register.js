@@ -5,7 +5,8 @@ const handleRegister = (req, res, url, bcrypt) => {
 	const { name, employee_id, email, password } = req.body;
 
 	if(!name || !employee_id || !email || !password) {
-		res.status(404).json('incorrect form submission')
+		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		isEmployee(url, employee_id, (resp) => {
 			console.log(resp)

@@ -7,6 +7,7 @@ const handleTeam = (req, res, url) => {
 
 	if(!emp_id) {
 		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 
 		isGod(url, emp_id, (resp1) => {

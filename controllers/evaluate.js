@@ -8,6 +8,7 @@ const handleEvaluate = (req, res, url) => {
 
 	if (!evaluator || !evaluated || !score ) {
 		res.status(404).json('invalid form submission');
+		return;
 	} else {
 		setStat(url, evaluated, score, (resp) => {
 			if (resp.modifiedCount === 0) {

@@ -6,7 +6,8 @@ const handleProfile = (req, res, url) => {
 	const { user_id, img_src } = req.body;
 
 	if(!user_id || !img_src) {
-		res.status(404).json('incorrect form submission')
+		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		MongoClient.connect(url, urlParse, (err, db) => {
 			if (err) throw err;

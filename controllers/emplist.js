@@ -6,7 +6,8 @@ const handleEmplist = (req, res, url) => {
 	const { get } = req.body;
 
 	if(!get) {
-		res.status(404).json('incorrect form submission')
+		res.status(404).json('incorrect form submission');
+		return;
 	} else {
 		MongoClient.connect(url, urlParse, (err, db) => {
 			if (err) throw err;
